@@ -1,38 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nero <nero@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 16:52:30 by nero              #+#    #+#             */
-/*   Updated: 2022/04/26 16:58:10 by nero             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_atoi(const char *str)
+int
+	ft_atoi(const char *str)
 {
-    long    i;
-    long    nbr;
-    int sign;
+	int	i;
+	int	is_neg;
+	int	res;
 
-    i = 0;
-    nbr = 0;
-    sign = 0;
-    while (str[i] != '\0' && (str[i] == 32 || str[i] == '\t' || str[i] == '\n'
-			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' ||
+			str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
 		i++;
-	if (str[i] != '\0' && str[i] == '-')
-    {
-        sign = 1;
-        i++;
-    }
-    else if (str[i] != '\0' && ft_isdigit(str[i]))
-        nbr = (nbr * 10) + (str[i++] - '0');
-    if (sign == 1)
-        return (-nbr);
-    else
-        return (nbr);
+	is_neg = (str[i] == '-') ? -1 : 1;
+	if (is_neg == -1 || str[i] == '+')
+		i++;
+	res = 0;
+	while (str[i] >= '0' && str[i] <= '9')
+		res = (res * 10) + (str[i++] - '0');
+	return (res * is_neg);
 }
